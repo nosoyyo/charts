@@ -1,6 +1,6 @@
-from .api import NetEase
-from .utils.tiempo import eightDigits
-from .utils.pipeline import MongoDBPipeline
+from api import NetEase
+from utils.tiempo import eightDigits
+from utils.pipeline import MongoDBPipeline
 
 
 class DailyRoutine():
