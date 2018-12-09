@@ -1296,13 +1296,17 @@ ul.songlist_list .songlist_item .songlist_songname .songlist_songname_txt .song-
     clear: both;
 }
 
-ul.songlist_list .songlist_item .songlist_songname .songlist_songname_txt .js_song {
+ul.songlist_list .songlist_item .songlist_songname .songlist_songname_txt {
     display: block;
     width: 100%;
     font-size: 14px;
     font-weight: bold;
     color: #333;
     line-height: 14px;
+}
+
+ul.songlist_list .js_song {
+    width: 50%;
 }
 
 ul.songlist_list .songlist_item .songlist_songname .info-l {

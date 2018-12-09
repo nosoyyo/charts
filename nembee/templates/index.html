@@ -30,6 +30,14 @@
             box-shadow: none;
             width: 100px;
         }
+
+        .songlist_company {
+            float: left;
+        }
+
+        .js_song {
+            width: 50%;
+        }
     </style>
 </head>
 
@@ -40,8 +48,14 @@
             <dl class="toplist_nav_list">
                 <dt class="toplist_nav_tit">网易云排行榜</dt>
 
-                <dd class="toplist_nav_item"><a href="https://y.qq.com/n/yqq/toplist/4.html#stat=y_new.toplist.menu.4"
-                        class="toplist_nav_link toplist_nav_link--current">巅峰榜·流行指数</a></dd>
+                <dd class="toplist_nav_item"><a href="/chart/rise"
+                        class="toplist_nav_link toplist_nav_link--current">云音乐飙升榜</a></dd>
+                <dd class="toplist_nav_item"><a href="/chart/new"
+                        class="toplist_nav_link toplist_nav_link--current">云音乐新歌榜</a></dd>
+                <dd class="toplist_nav_item"><a href="/chart/original"
+                        class="toplist_nav_link toplist_nav_link--current">网易原创歌曲榜</a></dd>
+                <dd class="toplist_nav_item"><a href="/chart/hot"
+                        class="toplist_nav_link toplist_nav_link--current">云音乐热歌榜</a></dd>
 
             </dl>
 
@@ -50,10 +64,10 @@
 
         <div class="mod_toplist">
             <div class="toplist_hd">
-                <strong class="toplist_tit">巅峰榜·流行指数</strong>
-                <form action="http://test-mu.sddix.com:52313/list-0">
+                <strong class="toplist_tit">{{title}}</strong>
+                <form action="/chart/{{title}}">
                     <div class="toplist-dp-wrap">
-                      <input type="text" value="2018-12-09 " name="create_time" class="form-control bs-date-picker">
+                      <input type="text" value="2018-12-09" name="day" class="form-control bs-date-picker">
                     </div>
                       <div class="toplist-btn-wrap">
                         <button type="submit">查看</button>
@@ -70,36 +84,35 @@
                 </ul>
 
                 <ul class="songlist_list">
-                    <li mid="223940063" ix="0">
+                    {% for item in j.items() %}
+                    <li mid={{ item[1].id }} ix="0">
                         <div class="songlist_item" onmouseover="this.className=(this.className+' songlist_item--hover')"
                             onmouseout="this.className=this.className.replace(/ songlist_item--hover/, '')">
 
-                            <div class="songlist_number  songlist_number--top">1</div>
+                            <div class="songlist_number  songlist_number--top">{{ item[0]}}</div>
 
                             <div class="songlist_songname">
 
                                 <span class="songlist_songname_txt" style="visibility: visible;">
-                                    <a href="https://y.qq.com/n/yqq/album/002aVGdm48gt3F.html" class="songlist_cover album_name"
-                                        data-albummid="002aVGdm48gt3F" data-albumid="5429797"><img onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                                            src="//y.gtimg.cn/music/photo_new/T002R150x150M000002aVGdm48gt3F.jpg?max_age=2592000"
-                                            data-original="//y.gtimg.cn/music/photo_new/T002R150x150M000002aVGdm48gt3F.jpg?max_age=2592000"
-                                            alt="蒙面唱将猜猜猜第三季 第7期" class="songlist_pic" style="display: block; visibility: visible;"></a>
-                                    <a href="https://y.qq.com/n/yqq/song/003MNjHn3MgszW.html" class="js_song" title="雪落下的声音 (Live) ">雪落下的声音
-                                        (Live)</a>
+                                    <a href={{ item[1].album.blurPicUrl }} class="songlist_cover album_name"><img onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
+                                            src={{ item[1].album.blurPicUrl }}
+                                            alt={{ item[1].album.name }} class="songlist_pic" style="display: block; visibility: visible;"></a>
+                                    <a href="https://music.163.com/song?id={{ item[1].id }}" class="js_song" title={{ item[1].name }}>{{ item[1].name }}[唱片公司：{{ item[1].album.company or 'N/A' }}]</a>
 
                                 </span>
 
+
                             </div>
 
-                            <div class="songlist_artist" title="周深">
+                            <div class="songlist_artist" title={{ item }}>
 
-                                <a href="https://y.qq.com/n/yqq/singer/003fA5G40k6hKc.html" data-singermid="003fA5G40k6hKc"
-                                    data-singerid="199509" title="周深" class="singer_name">周深</a>
+                                <a href="https://music.163.com/artist?id={{ item[1].artists[0].id}}" title={{item[1].artists[0].name}} class="singer_name">{{item[1].artists[0].name}}</a>
 
                             </div>
 
                         </div>
                     </li>
+                    {% endfor %}
                 </ul>
 
                 <div class="mod_page_nav js_pager"><strong class="current">1</strong><a href="javascript:;" class="js_pageindex"
