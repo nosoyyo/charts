@@ -1,53 +1,69 @@
+import time
+import schedule
+
 from api import NetEase
 from utils.tiempo import eightDigits
 from utils.pipeline import MongoDBPipeline
 
 
-class DailyRoutine():
+class Routine():
 
+    m = MongoDBPipeline()
     n = NetEase()
-    RISE = 0                # 云音乐飙升榜
-    NEW = 3779629           # 云音乐新歌榜
-    ORIGINAL = 2884035      # 网易原创歌曲榜
-    HOT = 3778678           # 云音乐热歌榜
+    charts = {
+        'rise': 0,                # 云音乐飙升榜
+        'new': 3779629,           # 云音乐新歌榜
+        'original': 2884035,      # 网易原创歌曲榜
+        'hot': 3778678,           # 云音乐热歌榜
+        }
 
     today = eightDigits()
+    print(today)
 
     def __init__(self):
-        self.rise = self.getRise()
-        self.new = self.getNew()
-        self.original = self.getOriginal()
-        self.hot = self.getHot()
+        try:
+            # get the stuff
+            for key in self.charts.keys():
+                self.__dict__[key] = self.getChart(key)
+                print(f'self.{key} grabbed via NetEase API.')
+                _hashable = [i['name'] for i in self.__dict__[key]]
+                self.__dict__[f'{key}_hash'] = hash(_hashable.__str__())
 
-    def getRise(self):
-        return self.n.top_songlist(_id=self.RISE)
+            # check if exists
+            exist_flags = []
+            for key in self.charts.keys():
+                query = self.m.ls(f'{self.today}.{key}')
+                _db_hash = hash([i['name'] for i in query].__str__())
 
-    def getNew(self):
-        return self.n.top_songlist(_id=self.NEW)
+                if _db_hash == self.__dict__[f'{key}_hash']:
+                    exist_flags.append(True)
+                    print(f'{self.today}.{key} seems already exist.')
 
-    def getOriginal(self):
-        return self.n.top_songlist(_id=self.ORIGINAL)
+            # insert into db if nothing exists
+            if not any(exist_flags):
+                for key in self.charts.keys():
+                    self.m.db[f'{self.today}.{key}'].drop()
+                    self.m.db[f'{self.today}.{key}'].insert_many(
+                                                            self.__dict__[key])
+                    print(f'{self.today}.{key} inserted into MongoDB.')
 
-    def getHot(self):
-        return self.n.top_songlist(_id=self.HOT)
+        except Exception as e:
+            print(e)
 
-    def grab(self):
-        pass
-
-
-class Day():
-
-    today = eightDigits()
-
-    def __init__(self, day=today):
-        '''
-        Must give 4 lists to call it a day.
-        '''
+    def getChart(self, key):
+        time.sleep(1)
+        return self.n.top_songlist(_id=self.charts[key])
 
 
 def main():
-    pass
+    Routine()
 
 
 if __name__ == "__main__":
     main()
+    schedule.every().hour.do(main)
+    print('安排上了')
+    print(schedule.run_pending())
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

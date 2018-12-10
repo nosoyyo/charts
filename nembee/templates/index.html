@@ -67,7 +67,7 @@
                 <strong class="toplist_tit">{{title}}</strong>
                 <form action="/chart/{{title}}">
                     <div class="toplist-dp-wrap">
-                      <input type="text" value="2018-12-09" name="day" class="form-control bs-date-picker">
+                      <input type="text" value="{{today}}" name="day" class="form-control bs-date-picker">
                     </div>
                       <div class="toplist-btn-wrap">
                         <button type="submit">查看</button>
@@ -78,9 +78,8 @@
 
             <div class="mod_songlist">
                 <ul class="songlist_header">
-                    <li class="songlist_header_name">歌曲</li>
-                    <li class="songlist_header_author">歌手</li>
-                    <li class="songlist_header_time">唱片公司</li>
+                    <li class="songlist_name">歌曲</li>
+                    <li class="songlist_author">歌手</li>
                 </ul>
 
                 <ul class="songlist_list">

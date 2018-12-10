@@ -3,3 +3,4 @@ uvicorn
 pymongo
 aiofiles
 jinja2
+schedule

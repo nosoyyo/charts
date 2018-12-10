@@ -30,7 +30,7 @@ async def homepage(request):
         chart = 'rise'
 
     try:
-        day = request.query_params['day']
+        day = request.query_params['day']       # eg. 20181209
     except KeyError:
         day = eightDigits()
 
@@ -38,7 +38,7 @@ async def homepage(request):
     print(f'fetching data from {url}')
     j = json.loads(requests.get(url).content)
     template = app.get_template('index.html')
-    content = template.render(request=request, j=j, title=chart)
+    content = template.render(request=request, j=j, title=chart, today=day)
     return HTMLResponse(content)
 
 
