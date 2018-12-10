@@ -62,8 +62,9 @@ def main():
 if __name__ == "__main__":
     main()
     schedule.every().hour.do(main)
-    print('安排上了')
-    print(schedule.run_pending())
+    schedule.every().day.at("00:01").do(main)
+    print(schedule.jobs)
+    print('schedule 安排上了')
     while True:
         schedule.run_pending()
         time.sleep(1)
