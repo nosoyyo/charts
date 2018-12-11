@@ -38,7 +38,7 @@ async def homepage(request):
     print(f'fetching data from {url}')
     j = json.loads(requests.get(url).content)
     template = app.get_template('index.html')
-    content = template.render(request=request, j=j, title=chart, today=day)
+    content = template.render(request=request, j=j, title=chart, day=day)
     return HTMLResponse(content)
 
 
