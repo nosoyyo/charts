@@ -38,14 +38,20 @@ class Routine():
                 if _db_hash == self.__dict__[f'{key}_hash']:
                     exist_flags.append(True)
                     print(f'{self.today}.{key} seems already exist.')
+                else:
+                    exist_flags.append(True)
+                    print(f'{self.today}.{key} not there, will grab.')
 
             # insert into db if nothing exists
-            if not any(exist_flags):
-                for key in self.charts.keys():
-                    self.m.db[f'{self.today}.{key}'].drop()
-                    self.m.db[f'{self.today}.{key}'].insert_many(
-                                                            self.__dict__[key])
-                    print(f'{self.today}.{key} inserted into MongoDB.')
+            _index = 0
+            keys = [key for key in self.charts.keys()]
+            for flag in exist_flags:
+                if not flag:
+                    self.m.db[f'{self.today}.{keys[_index]}'].drop()
+                    self.m.db[f'{self.today}.{keys[_index]}'].insert_many(
+                                                   self.__dict__[keys[_index]])
+                    print(f'{self.today}.{keys[_index]} inserted in MongoDB.')
+                _index += 1
 
         except Exception as e:
             print(e)
@@ -55,14 +61,10 @@ class Routine():
         return self.n.top_songlist(_id=self.charts[key])
 
 
-def main():
-    Routine()
-
-
 if __name__ == "__main__":
-    main()
-    schedule.every().hour.do(main)
-    schedule.every().day.at("00:01").do(main)
+    Routine()
+    schedule.every().hour.do(Routine)
+    schedule.every().day.at("00:01").do(Routine)
     print(schedule.jobs)
     print('schedule 安排上了')
     while True:
