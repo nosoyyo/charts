@@ -1,15 +1,28 @@
 {% block body %}
 
-<div class="main">
+<div class="container-fluid">
 
     {% include "nav.html" %}
     {% block nav %}
     {% endblock %}
 
-    {% include "toplist.html" %}
-    {% block toplist %}
-    {% endblock %}
-    
+    {% set charts = {
+    'rise': '云音乐飙升榜',
+    'new': '云音乐新歌榜',
+    'original': '网易原创歌曲榜',
+    'hot': '云音乐热歌榜',
+    } %}
+
+    <div class="bd">
+        <dl>
+        <h1 class="toplist_tit">{{ charts[title] }} {{ day }}</h1>
+        </dl>
+    </div>
+
+    {# include "toplist.html" #}
+    {# block toplist #}
+    {# endblock #}
+
     {% include "songlist.html" %}
     {% block songlist %}
     {% endblock %}

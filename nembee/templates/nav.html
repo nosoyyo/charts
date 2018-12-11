@@ -1,18 +1,38 @@
 {% block nav %}
-    <div class="toplist_nav">
-        <dl class="toplist_nav_list">
-            <dt class="toplist_nav_tit">网易云排行榜</dt>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">榜单监控</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <dd class="toplist_nav_item"><a href="/chart/rise"
-                    class="toplist_nav_link toplist_nav_link--current">云音乐飙升榜</a></dd>
-            <dd class="toplist_nav_item"><a href="/chart/new"
-                    class="toplist_nav_link toplist_nav_link--current">云音乐新歌榜</a></dd>
-            <dd class="toplist_nav_item"><a href="/chart/original"
-                    class="toplist_nav_link toplist_nav_link--current">网易原创歌曲榜</a></dd>
-            <dd class="toplist_nav_item"><a href="/chart/hot"
-                    class="toplist_nav_link toplist_nav_link--current">云音乐热歌榜</a></dd>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        榜单列表
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="/chart/rise">云音乐飙升榜</a>
+                                        <a class="dropdown-item" href="/chart/new">云音乐新歌榜</a>
+                                        <a class="dropdown-item" href="/chart/original">网易原创歌曲榜</a>
+                                        <a class="dropdown-item" href="/chart/hot">云音乐热歌榜</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                        </li>
 
-        </dl>
-
-    </div>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                        <input id="datepicker" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <script>
+                                        $('#datepicker').datepicker({
+                                            uiLibrary: 'bootstrap4'
+                                        });
+                                    </script>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+        </div>
+</nav>
 {% endblock %}

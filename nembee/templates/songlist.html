@@ -1,44 +1,27 @@
 {% block songlist %}
-<div class="mod_songlist">
-        <ul class="songlist_header">
-            <li class="songlist_name">歌曲</li>
-            <li class="songlist_author">歌手</li>
-        </ul>
+<div class="container-fluid">
+    <ul class="songlist_list">
+        {% for item in j.items() %}
 
-        <ul class="songlist_list">
-            {% for item in j.items() %}
-            <li mid={{ item[1].id }} ix="0">
-                <div class="songlist_item" onmouseover="this.className=(this.className+' songlist_item--hover')"
-                    onmouseout="this.className=this.className.replace(/ songlist_item--hover/, '')">
+        <div class="card" style="width: 18rem;">
+            <a href="https://music.163.com/album?id={{ item[1].album.id }}">
+                <img onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
+                    class="card-img-top" src="{{ item[1].album.blurPicUrl }}" alt="{{ item[1].album.name }} ">
+            </a>
+            <div class="card-body">
+                <span class="badge badge-pill badge-primary">{{ item[0] }}</span>
+                <h5 class="card-title"><a href="https://music.163.com/song?id={{ item[1].id }}" title={{ item[1].name }}>{{item[1].name
+                        }}</h5></a>
+                <p class="card-text"><a href="https://music.163.com/artist?id={{ item[1].artists[0].id}}" title={{item[1].artists[0].name}}>{{item[1].artists[0].name}}</a></p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <p class="card-text">唱片公司：{{ item[1].album.company or 'N/A' }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </ul>
 
-                    <div class="songlist_number  songlist_number--top">{{ item[0]}}</div>
-
-                    <div class="songlist_songname">
-
-                        <span class="songlist_songname_txt" style="visibility: visible;">
-                            <a href="https://music.163.com/album?id={{ item[1].album.id }}" class="songlist_cover album_name"><img
-                                    onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                                    src={{ item[1].album.blurPicUrl }} alt={{ item[1].album.name }} class="songlist_pic"
-                                    style="display: block; visibility: visible;"></a>
-                            <a href="https://music.163.com/song?id={{ item[1].id }}" class="js_song" title={{ item[1].name }}>{{
-                                item[1].name }}[唱片公司：{{ item[1].album.company or 'N/A' }}]</a>
-
-                        </span>
-
-
-                    </div>
-
-                    <div class="songlist_artist" title={{ item[1].artists[0].name }}>
-
-                        <a href="https://music.163.com/artist?id={{ item[1].artists[0].id}}" title={{item[1].artists[0].name}}
-                            class="singer_name">{{item[1].artists[0].name}}</a>
-
-                    </div>
-
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-
-    </div>
+</div>
 {% endblock %}

@@ -7,19 +7,12 @@ from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 from starlette.responses import PlainTextResponse
 
-from utils.tiempo import eightDigits
+from utils.tiempo import eightDigits, ft
 from utils.pipeline import MongoDBPipeline
 
 
 app = Starlette(debug=True, template_directory='templates')
 # app.mount('/static', StaticFiles(directory='statics'), name='static')
-
-
-@app.route('/')
-async def homepage(request):
-    template = app.get_template('index.html')
-    content = template.render(request=request)
-    return HTMLResponse(content)
 
 
 @app.route('/chart/{name}')
@@ -38,7 +31,11 @@ async def homepage(request):
     print(f'fetching data from {url}')
     j = json.loads(requests.get(url).content)
     template = app.get_template('index.html')
-    content = template.render(request=request, j=j, title=chart, day=day)
+    content = template.render(request=request,
+                              j=j,
+                              title=chart,
+                              day=day,
+                              ft=ft)
     return HTMLResponse(content)
 
 
