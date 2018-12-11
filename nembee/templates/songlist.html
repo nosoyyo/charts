@@ -1,9 +1,8 @@
 {% block songlist %}
 <div class="container-fluid">
-    <ul class="songlist_list">
+    <ul class="row">
         {% for item in j.items() %}
-
-        <div class="card" style="width: 18rem;">
+        <div class="card col-3" style="width: 18rem;">
             <a href="https://music.163.com/album?id={{ item[1].album.id }}">
                 <img onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
                     class="card-img-top" src="{{ item[1].album.blurPicUrl }}" alt="{{ item[1].album.name }} ">
@@ -15,11 +14,15 @@
                 <p class="card-text"><a href="https://music.163.com/artist?id={{ item[1].artists[0].id}}" title={{item[1].artists[0].name}}>{{item[1].artists[0].name}}</a></p>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <p class="card-text">唱片公司：{{ item[1].album.company or 'N/A' }}</p>
+                        <p class="card-text"> © {{ item[1].album.company or 'N/A' }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="card-text"> {{ ft(item[1].album.publishTime) }}</p>
                     </li>
                 </ul>
             </div>
         </div>
+
         {% endfor %}
     </ul>
 

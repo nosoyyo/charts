@@ -1,0 +1,40 @@
+{% block stats %}
+<div class="container-fluid">
+
+    {% set charts = {
+    'rise': '云音乐飙升榜',
+    'new': '云音乐新歌榜',
+    'original': '网易原创歌曲榜',
+    'hot': '云音乐热歌榜',
+    } %}
+
+    <div class="card">
+        <div class="card-header">
+                <h5 class="text-center">
+                    {{ charts[title] }}</h5>
+        </div>
+        <div class="card card-body row" id="stats">
+            <div class="col-6">
+                <p>今日霸榜艺人</p>
+                <ul class="list-group list-group-flush">
+                    {% for ma in most_artist %}
+                    <li class="list-group-item col-6">
+                        <p class="card-text">{{ ma }}</p>
+                        <ul class="list-group list-group-flush">
+                            {% for song in ma_result[ma] %}
+                            <li>{{ song }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+
+            </div>
+            <div class="col-6" id="Company">
+                <P>今日霸榜公司</P>
+            </div>
+        </div>
+
+        <div class="card-footer text-center"> {{ day }}</div>
+
+    </div>
+    {% endblock %}

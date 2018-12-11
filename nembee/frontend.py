@@ -2,21 +2,18 @@ import json
 import uvicorn
 import requests
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
-from starlette.responses import PlainTextResponse
 
 from utils.tiempo import eightDigits, ft
-from utils.pipeline import MongoDBPipeline
 
 
 app = Starlette(debug=True, template_directory='templates')
-# app.mount('/static', StaticFiles(directory='statics'), name='static')
+app.mount('/assets', StaticFiles(directory='assets'), name='assets')
 
 
 @app.route('/chart/{name}')
-async def homepage(request):
+async def charts(request):
     try:
         chart = request.path_params['name']     # e.g. 'rise'
     except KeyError:
@@ -30,19 +27,38 @@ async def homepage(request):
     url = f'http://127.0.0.1:50000/toplist?chart={chart}&day={day}'
     print(f'fetching data from {url}')
     j = json.loads(requests.get(url).content)
+
+    # some backend rendering
+    artists = [i[1]['artists'][0]['name'] for i in j.items()]
+    biggest = 0
+    most_artist = []
+    for a in artists:
+        if artists.count(a) > biggest:
+            most_artist = []
+            most_artist.append(a)
+            biggest = artists.count(a)
+        elif artists.count(a) == biggest:
+            most_artist.append(a)
+    # TODO bad thing happens when no one most
+    most_artist = list(set(most_artist))
+    ma_result = {}
+    for ma in most_artist:
+        songs = []
+        for i in j.items():
+            if i[1]['artists'][0]['name'] == ma:
+                songs.append(i[1]['name'])
+            ma_result[ma] = songs
+
     template = app.get_template('index.html')
     content = template.render(request=request,
                               j=j,
                               title=chart,
                               day=day,
-                              ft=ft)
+                              ft=ft,
+                              most_artist=most_artist,
+                              ma_result = ma_result,
+                              )
     return HTMLResponse(content)
-
-
-
-@app.exception_handler(500)
-async def server_error(request, exc):
-    return PlainTextResponse('暂无数据')
 
 
 if __name__ == '__main__':
