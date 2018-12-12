@@ -19,8 +19,8 @@ class Routine():
 
     def __init__(self):
 
-        today = eightDigits()
-        print(today)
+        self.today = eightDigits()
+        print(self.today)
 
         try:
             # get the stuff
@@ -40,7 +40,7 @@ class Routine():
                     exist_flags.append(True)
                     print(f'{self.today}.{key} seems already exist.')
                 else:
-                    exist_flags.append(True)
+                    exist_flags.append(False)
                     print(f'{self.today}.{key} not there, will grab.')
 
             # insert into db if nothing exists
