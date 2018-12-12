@@ -17,10 +17,11 @@ class Routine():
         'hot': 3778678,           # 云音乐热歌榜
         }
 
-    today = eightDigits()
-    print(today)
-
     def __init__(self):
+
+        today = eightDigits()
+        print(today)
+
         try:
             # get the stuff
             for key in self.charts.keys():
