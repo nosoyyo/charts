@@ -27,12 +27,16 @@ class NetEase:
             'Connection': 'keep-alive',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Host': 'music.163.com',
+            'X-Real-IP': '123.207.40.50',
             'Referer': 'http://music.163.com/search/',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.3538.102 Safari/537.36'
         }
-        self.cookies = {
-            'appver': '1.5.2'
-        }
+        with open('cookies.json') as f:
+            cookies = json.load(f)
+        self.cookies = {item['name']: item['value']
+                        for item in cookies if item['domain']
+                        == self.domain}
+        self.cookies['appver'] = '1.5.2'
 
     def httpRequest(self, method, action, query=None, urlencoded=None, callback=None, timeout=None):    
         if(method == 'GET'):

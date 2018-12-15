@@ -30,7 +30,11 @@ class Routine():
                 _hashable = [i['name'] for i in self.__dict__[key]]
                 self.__dict__[f'{key}_hash'] = hash(_hashable.__str__())
 
-            # check if exists
+            # TODO check if not empty
+            for key in self.charts.keys():
+                self.__dict__[key]
+
+            # check if already in db
             exist_flags = []
             for key in self.charts.keys():
                 query = self.m.ls(f'{self.today}.{key}')
@@ -41,7 +45,7 @@ class Routine():
                     print(f'{self.today}.{key} seems already exist.')
                 else:
                     exist_flags.append(False)
-                    print(f'{self.today}.{key} not there, will grab.')
+                    print(f'{self.today}.{key} not there, will insert.')
 
             # insert into db if nothing exists
             _index = 0
@@ -64,7 +68,7 @@ class Routine():
 
 if __name__ == "__main__":
     Routine()
-    schedule.every().hour.do(Routine)
+    schedule.every(3).hours.do(Routine)
     schedule.every().day.at("00:01").do(Routine)
     print(schedule.jobs)
     print('schedule 安排上了')
