@@ -56,7 +56,7 @@ async def charts(request):
                               day=day,
                               ft=ft,
                               most_artist=most_artist,
-                              ma_result = ma_result,
+                              ma_result=ma_result,
                               )
     return HTMLResponse(content)
 
