@@ -30,8 +30,8 @@ settings['MONGODB_SERVER'] = os.environ.get('LOCAL_MONGODB_SERVER')
 settings['MONGODB_PORT'] = int(os.environ.get('LOCAL_MONGODB_PORT'))
 settings['MONGODB_USERNAME'] = os.environ.get('LOCAL_MONGODB_USERNAME')
 settings['MONGODB_PASSWORD'] = os.environ.get('LOCAL_MONGODB_PASSWORD')
-settings['MONGODB_NEMBEE_DB'] = 'kb'
-settings['MONGODB_INIT_COL'] = 'kb'
+settings['MONGODB_NEMBEE_DB'] = 'nembee'
+settings['MONGODB_INIT_COL'] = 'nembee'
 
 # init
 if 'log' not in os.listdir():
