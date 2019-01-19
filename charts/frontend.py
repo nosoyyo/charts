@@ -27,8 +27,9 @@ async def charts(request):
         day = eightDigits()
 
     url = f'http://127.0.0.1:50000/toplist?chart={chart}&day={day}'
-    print(f'fetching data from {url}')
-    j = json.loads(requests.get(url).content)
+    content = requests.get(url).content
+    if content:
+        j = json.loads()
 
     # some backend rendering
     artists = [i[1]['artists'][0]['name'] for i in j.items()]
@@ -68,9 +69,9 @@ if __name__ == '__main__':
     reloader.run(run, {
         'app': app,
         'host': '0.0.0.0',
-        'port': 40406,
+        'port': 40404,
         'log_level': 'debug',
         'debug': 'true'
     })
 
-    uvicorn.run(app, host='0.0.0.0', port=40406)
+    uvicorn.run(app, host='0.0.0.0', port=40404)
