@@ -68,9 +68,9 @@ if __name__ == '__main__':
     reloader.run(run, {
         'app': app,
         'host': '0.0.0.0',
-        'port': 40405,
+        'port': 40406,
         'log_level': 'debug',
         'debug': 'true'
     })
 
-    uvicorn.run(app, host='0.0.0.0', port=40405)
+    uvicorn.run(app, host='0.0.0.0', port=40406)
