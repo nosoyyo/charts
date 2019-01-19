@@ -1,4 +1,6 @@
 import uvicorn
+from uvicorn.reloaders.statreload import StatReload
+from uvicorn.main import run, get_logger
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.responses import PlainTextResponse
@@ -41,4 +43,12 @@ async def server_error(request, exc):
 
 
 if __name__ == '__main__':
+    reloader = StatReload(get_logger('debug'))
+    reloader.run(run, {
+        'app': app,
+        'host': '127.0.0.1',
+        'port': 50000,
+        'log_level': 'debug',
+        'debug': 'true'
+    })
     uvicorn.run(app, host='127.0.0.1', port=50000)

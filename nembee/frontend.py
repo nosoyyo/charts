@@ -1,6 +1,8 @@
 import json
-import uvicorn
 import requests
+import uvicorn
+from uvicorn.main import run, get_logger
+from uvicorn.reloaders.statreload import StatReload
 from starlette.applications import Starlette
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
@@ -62,4 +64,13 @@ async def charts(request):
 
 
 if __name__ == '__main__':
+    reloader = StatReload(get_logger('debug'))
+    reloader.run(run, {
+        'app': app,
+        'host': '0.0.0.0',
+        'port': 40404,
+        'log_level': 'debug',
+        'debug': 'true'
+    })
+
     uvicorn.run(app, host='0.0.0.0', port=40404)
