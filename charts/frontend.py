@@ -8,6 +8,7 @@ from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 
 from utils.tiempo import eightDigits, ft
+from settings import FRONTEND_PORT, BACKEND_PORT
 
 
 app = Starlette(debug=True, template_directory='templates')
@@ -26,7 +27,7 @@ async def charts(request):
     except KeyError:
         day = eightDigits()
 
-    url = f'http://127.0.0.1:50000/toplist?chart={chart}&day={day}'
+    url = f'http://127.0.0.1:{BACKEND_PORT}/toplist?chart={chart}&day={day}'
     content = requests.get(url).content
     if content:
         j = json.loads()
@@ -69,9 +70,9 @@ if __name__ == '__main__':
     reloader.run(run, {
         'app': app,
         'host': '0.0.0.0',
-        'port': 40404,
+        'port': FRONTEND_PORT,
         'log_level': 'debug',
         'debug': 'true'
     })
 
-    uvicorn.run(app, host='0.0.0.0', port=40404)
+    uvicorn.run(app, host='0.0.0.0', port=FRONTEND_PORT)

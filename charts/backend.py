@@ -7,7 +7,7 @@ from starlette.responses import PlainTextResponse
 
 from utils.tiempo import eightDigits
 from utils.pipeline import MongoDBPipeline
-
+from settings import BACKEND_PORT
 
 app = Starlette(debug=True, template_directory='templates')
 
@@ -47,8 +47,8 @@ if __name__ == '__main__':
     reloader.run(run, {
         'app': app,
         'host': '127.0.0.1',
-        'port': 50000,
+        'port': BACKEND_PORT,
         'log_level': 'debug',
         'debug': 'true'
     })
-    uvicorn.run(app, host='127.0.0.1', port=50000)
+    uvicorn.run(app, host='127.0.0.1', port=BACKEND_PORT)
