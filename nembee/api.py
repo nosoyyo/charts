@@ -34,8 +34,7 @@ class NetEase:
         with open('cookies.json') as f:
             cookies = json.load(f)
         self.cookies = {item['name']: item['value']
-                        for item in cookies if item['domain']
-                        == self.domain}
+                        for item in cookies}
         self.cookies['appver'] = '1.5.2'
 
     def httpRequest(self, method, action, query=None, urlencoded=None, callback=None, timeout=None):    
