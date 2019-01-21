@@ -1,4 +1,6 @@
+import json
 import time
+import requests
 import schedule
 
 from charter import Charter
@@ -13,9 +15,24 @@ class QQRoutine(Charter):
         'qq_original': 52,            # 原创
         }
 
-    def getChart(self, key):
+    def getChart(self, chart_id):
+        '''
+        :param chart_id: <int> value of self.charts
+        '''
         time.sleep(1)
-        raise NotImplementedError
+        url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?'
+        params = {}
+        params['topid'] = chart_id
+        params['song_num'] = 100
+        params['format'] = 'json'
+        params['platform'] = 'yqq.json'
+
+        try:
+            resp = requests.get(url, params=params)
+            j = json.loads(resp.content)
+            return j
+        except Exception:
+            return None
 
 
 if __name__ == "__main__":

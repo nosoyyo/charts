@@ -30,7 +30,7 @@ async def charts(request):
     url = f'http://127.0.0.1:{BACKEND_PORT}/toplist?chart={chart}&day={day}'
     content = requests.get(url).content
     if content:
-        j = json.loads()
+        j = json.loads(content)
 
     # some backend rendering
     artists = [i[1]['artists'][0]['name'] for i in j.items()]
@@ -75,4 +75,4 @@ if __name__ == '__main__':
         'debug': 'true'
     })
 
-    uvicorn.run(app, host='0.0.0.0', port=FRONTEND_PORT)
+    uvicorn.run(app, host='0.0.0.0', port=FRONTEND_PORT, debug='true')

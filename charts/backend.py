@@ -1,15 +1,19 @@
+import time
 import uvicorn
+import schedule
 from uvicorn.reloaders.statreload import StatReload
 from uvicorn.main import run, get_logger
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
-from starlette.responses import PlainTextResponse
 
 from utils.tiempo import eightDigits
 from utils.pipeline import MongoDBPipeline
 from settings import BACKEND_PORT
+from qbee import QQRoutine
+from nembee import NemRoutine
 
-app = Starlette(debug=True, template_directory='templates')
+
+app = Starlette(debug='true')
 
 
 @app.route('/toplist')
@@ -37,11 +41,6 @@ async def toplist(request):
     return JSONResponse(doc)
 
 
-@app.exception_handler(500)
-async def server_error(request, exc):
-    return PlainTextResponse('暂无数据')
-
-
 if __name__ == '__main__':
     reloader = StatReload(get_logger('debug'))
     reloader.run(run, {
@@ -51,4 +50,15 @@ if __name__ == '__main__':
         'log_level': 'debug',
         'debug': 'true'
     })
-    uvicorn.run(app, host='127.0.0.1', port=BACKEND_PORT)
+    uvicorn.run(app=app, host='127.0.0.1', port=BACKEND_PORT, debug='true')
+
+    os.system('touch irun')
+    schedule.every(3).hours.do(QQRoutine)
+    schedule.every().day.at("00:01").do(QQRoutine)
+    schedule.every(3).hours.do(NemRoutine)
+    schedule.every().day.at("00:02").do(NemRoutine)
+    print(schedule.jobs)
+    print('schedule 安排上了')
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
