@@ -1,0 +1,53 @@
+{% block tools %}
+
+<style>
+
+    .page-title {
+        margin: 20px;
+        font: 4em sans-serif;
+    }
+
+    .tools {
+        margin: 30px;
+    }
+
+</style>
+
+<div class="container">
+
+        <div class="dropdown tools">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                显示选项
+            </button>
+            <div id='release-filter' class="dropdown-menu btn-group-toggle" aria-labelledby="dropdownMenuButton">
+                <label class="btn btn-secondary active">
+                    <input type="checkbox" checked autocomplete="off"> Checked
+                </label>
+                <a id='one_week' class="dropdown-item" href="#">一周内</a>
+                <a id='two_weeks' class="dropdown-item" href="#">两周内</a>
+                <a id='one_month' class="dropdown-item" href="#">一月内</a>
+                <a id='three_months' class="dropdown-item" href="#">三月内</a>
+                <a id='one_year' class="dropdown-item" href="#">一年内</a>
+                <a id='two_years' class="dropdown-item" href="#">两年内</a>
+            </div>
+        </div>
+
+        <script>
+
+            $('#two_weeks').click(function(){
+                $('.two_weeks').css('display','none');
+            });
+
+            $('#three_months').click(function(){
+                $('.three_months').css('display','none');
+            });
+
+        </script>    
+
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</div>
+{% endblock %}

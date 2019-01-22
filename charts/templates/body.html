@@ -4,13 +4,18 @@
     {% block nav %}
     {% endblock %}
 
-    {% include "stats.html" %}
-    {% block stats %}
+    {{ props.test }}
+
+    <h5 class="text-center page-title">
+            {{ props.chart_title }}</h5>
+    
+
+    {% include "tools.html" %}
+    {% block tools %}
     {% endblock %}
 
     {% include "songlist.html" %}
     {% block songlist %}
     {% endblock %}
 
-</div>
 {% endblock %}
