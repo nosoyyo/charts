@@ -15,11 +15,12 @@ class QQRoutine(Charter):
         'qq_original': 52,            # 原创
         }
 
-    def getChart(self, chart_id):
+    def getChart(self, key) -> list:
         '''
         :param chart_id: <int> value of self.charts
         '''
         time.sleep(1)
+        chart_id = self.charts[key]
         url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?'
         params = {}
         params['topid'] = chart_id
@@ -30,9 +31,12 @@ class QQRoutine(Charter):
         try:
             resp = requests.get(url, params=params)
             j = json.loads(resp.content)
-            return j
+            return j['songlist']
         except Exception:
             return None
+
+    def getSongTitleList(self, key):
+        return [i['data']['songname'] for i in self.__dict__[key]]
 
 
 if __name__ == "__main__":

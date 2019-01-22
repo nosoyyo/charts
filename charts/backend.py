@@ -1,6 +1,4 @@
-import time
 import uvicorn
-import schedule
 from uvicorn.reloaders.statreload import StatReload
 from uvicorn.main import run, get_logger
 from starlette.applications import Starlette
@@ -9,8 +7,6 @@ from starlette.responses import JSONResponse
 from utils.tiempo import eightDigits
 from utils.pipeline import MongoDBPipeline
 from settings import BACKEND_PORT
-from qbee import QQRoutine
-from nembee import NemRoutine
 
 
 app = Starlette(debug='true')
@@ -51,14 +47,3 @@ if __name__ == '__main__':
         'debug': 'true'
     })
     uvicorn.run(app=app, host='127.0.0.1', port=BACKEND_PORT, debug='true')
-
-    os.system('touch irun')
-    schedule.every(3).hours.do(QQRoutine)
-    schedule.every().day.at("00:01").do(QQRoutine)
-    schedule.every(3).hours.do(NemRoutine)
-    schedule.every().day.at("00:02").do(NemRoutine)
-    print(schedule.jobs)
-    print('schedule 安排上了')
-    while True:
-        schedule.run_pending()
-        time.sleep(1)

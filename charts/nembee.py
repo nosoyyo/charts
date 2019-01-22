@@ -15,9 +15,12 @@ class NemRoutine(Charter):
         'nem_hot': 3778678,           # 云音乐热歌榜
         }
 
-    def getChart(self, key):
+    def getChart(self, key) -> list:
         time.sleep(1)
         return self.n.top_songlist(_id=self.charts[key])
+
+    def getSongTitleList(self, key):
+        return [i['name'] for i in self.__dict__[key]]
 
 
 if __name__ == "__main__":
