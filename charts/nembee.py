@@ -1,7 +1,7 @@
 import time
 import schedule
 
-from api import NetEase
+from nemapi import NetEase
 from charter import Charter
 
 
@@ -17,7 +17,8 @@ class NemRoutine(Charter):
 
     def getChart(self, key) -> list:
         time.sleep(1)
-        return self.n.top_songlist(_id=self.charts[key])
+        chart = self.n.top_songlist(_id=self.charts[key])
+        return self.regularize(chart)
 
     def getSongTitleList(self, key):
         return [i['name'] for i in self.__dict__[key]]
@@ -28,6 +29,10 @@ class NemRoutine(Charter):
         '''
         return hash([i['name'] for i in query].__str__())
 
+    def regularize(self, chart):
+        '''
+        '''
+        pass
 
 if __name__ == "__main__":
     NemRoutine()
