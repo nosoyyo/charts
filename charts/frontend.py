@@ -6,7 +6,7 @@ from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 
 from utils.tiempo import eightDigits, ft
-from datahandler import DataHandler
+from propsfactory import PropsFactory
 from settings import FRONTEND_PORT
 
 
@@ -27,7 +27,7 @@ async def charts(request):
         day = eightDigits()
 
     # some backend rendering
-    props = DataHandler(chart, day).props
+    props = PropsFactory(chart, day).props
 
     template = app.get_template('index.html')
     content = template.render(request=request,

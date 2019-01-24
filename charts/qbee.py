@@ -31,12 +31,26 @@ class QQRoutine(Charter):
         try:
             resp = requests.get(url, params=params)
             j = json.loads(resp.content)
-            return j['songlist']
+            return self.fixName(j['songlist'])
         except Exception:
             return None
 
     def getSongTitleList(self, key):
         return [i['data']['songname'] for i in self.__dict__[key]]
+
+    def fixName(self, j: list) -> list:
+        '''
+        To add the field that the original method needs for processing.
+        '''
+        for item in j:
+            item['name'] = item['data']['songname']
+        return j
+
+    def buildHashedList(self, query: list):
+        '''
+        :param query: <list> search result from MongoDB
+        '''
+        return hash([i['data']['songname'] for i in query].__str__())
 
 
 if __name__ == "__main__":

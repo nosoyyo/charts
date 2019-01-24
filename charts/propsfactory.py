@@ -5,7 +5,7 @@ from settings import BACKEND_PORT
 from utils.tiempo import buildClass, delta, ft
 
 
-class DataHandler():
+class PropsFactory():
 
     nem_charts = {
         'nem_rise': '云音乐飙升榜',

@@ -34,7 +34,7 @@ class Charter():
             exist_flags = []
             for key in keys:
                 query = self.m.ls(f'{self.today}.{key}')
-                _db_hash = hash([i['name'] for i in query].__str__())
+                _db_hash = self.buildHashedList(query)
 
                 if _db_hash == self.__dict__[f'{key}_hash']:
                     exist_flags.append(True)
@@ -65,3 +65,9 @@ class Charter():
     def checkTypes(self):
         for key in self.keys:
             print(type(self.__dict__[key]))
+
+    def buildHashedList(self, query: list):
+        '''
+        :param query: <list> search result from MongoDB
+        '''
+        raise NotImplementedError
