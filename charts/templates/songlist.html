@@ -9,7 +9,10 @@
                     class="card-img-top" src="{{ item.album_cover }}" alt="{{ item.album_title }} ">
             </a>
             <div class="card-body">
+
                 <span class="badge badge-pill badge-primary">{{ item.song_pos }}</span>
+                <span class="badge badge-pill badge-light">{{ props.delta(item.release_date).days }} 天前</span>
+
                 <h5 class="card-title"><a href="{{ item.song_url }}" title={{ item.song_title }}>{{ item.song_title }}</h5></a>
                 <p class="card-text"><a href="{{ item.artists[0].url }}" title={{ item.artists[0].name }}>{{ item.artists[0].name }}</a></p>
                 <ul class="list-group list-group-flush">
@@ -18,9 +21,6 @@
                     </li>
                     <li class="list-group-item">
                         <p class="card-text"> {{ props.ft(item.release_date) }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <p class="card-text"> 发行于 {{ props.delta(item.release_date).days }} 天前</p>
                     </li>
                 </ul>
             </div>
