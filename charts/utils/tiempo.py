@@ -11,8 +11,10 @@ def ft(timestamp):
     Here is especially for the timestamp contains in NetEase Json
     which looks like `1543766400000`
     '''
-
-    timestamp = int(str(timestamp)[:10])
+    if len(str(timestamp)) == 13:
+        timestamp = int(str(timestamp)[:10])
+    elif len(str(timestamp)) == 12:
+        timestamp = int(str(timestamp)[:9])
     t = datetime.datetime.fromtimestamp(timestamp)
     return f'{t.year}{t.month:0>2}{t.day:0>2}'
 
@@ -21,7 +23,10 @@ def delta(timestamp):
     '''
     Calculate how many days past from a given timestamp till now.
     '''
-    timestamp = int(str(timestamp)[:10])
+    if len(str(timestamp)) == 13:
+        timestamp = int(str(timestamp)[:10])
+    elif len(str(timestamp)) == 12:
+        timestamp = int(str(timestamp)[:9])
     return datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp)
 
 
