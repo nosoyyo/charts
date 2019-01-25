@@ -3,7 +3,7 @@
     <ul class="row">
         {% for item in props.songlist %}
         <div class="card col-3 song-card {{ props.buildClass(props.delta(item.release_date)) }}" style="width: 18rem;">
-                
+
             <a href="{{ item.album_url }}">
                 <img onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
                 class="card-img-top" src="{{ item.album_cover }}" alt="{{ item.album_title }} ">
@@ -16,7 +16,7 @@
 
                 {% if item.company[0] %}
                     {% if props.statemgr.isKehu(item.company[0]) %}
-                    <span class='badge badge-pill badge-success'>客户</span>
+                    <span class='badge badge-pill badge-success kehu'>客户</span>
                     {% endif %}
                 {% endif %}
 

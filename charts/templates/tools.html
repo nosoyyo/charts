@@ -8,7 +8,17 @@
     }
 
     .tools {
-        margin: 0px 15px 0px 75px;
+        margin: 0px 15px 0px 120px;
+    }
+
+    #toggle-kehu {
+        float: right;
+        margin: 0px 60px 10px 0px;
+    }
+
+    #kehu-badge {
+        float: right;
+        margin: 0px 60px 0px 0px;
     }
 
 </style>
@@ -16,6 +26,7 @@
 <div class='tools'>
     
         <span class='badge badge-dark'>按发行日期显示</span>
+        <span id='kehu-badge' class='badge badge-dark'>只显示客户</span>
 
         <div class="btn-group-toggle" role="group" data-toggle='buttons'>
             <label id='one_week' class="btn btn-info active">
@@ -39,8 +50,13 @@
             <label id='back_catalogue' class="btn btn-info active">
                 <input type="checkbox" checked autocomplete="off">更久以前
             </label>
-            
+            <label id='toggle-kehu' class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off">筛选客户
+            </label>
         </div>
+
+        <!--<button type="button" id='toggle-kehu' class="btn btn-primary btn-lg">筛选客户</button>-->
+
     </div>
 
         <script>
@@ -67,6 +83,9 @@
                 $('.back_catalogue').toggle('fast');
             });
 
+            $('#toggle-kehu').click(function(){
+                $('.song-card:not(:has(span.kehu))').toggle('slow');
+            });
         </script>    
 
 {% endblock %}
