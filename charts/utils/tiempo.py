@@ -15,6 +15,8 @@ def ft(timestamp):
         timestamp = int(str(timestamp)[:10])
     elif len(str(timestamp)) == 12:
         timestamp = int(str(timestamp)[:9])
+    elif len(str(timestamp)) == 12 and '.' in str(timestamp):
+        timestamp = int(str(timestamp)[:10])
     t = datetime.datetime.fromtimestamp(timestamp)
     return f'{t.year}{t.month:0>2}{t.day:0>2}'
 
@@ -26,7 +28,10 @@ def delta(timestamp):
     if len(str(timestamp)) == 13:
         timestamp = int(str(timestamp)[:10])
     elif len(str(timestamp)) == 12:
-        timestamp = int(str(timestamp)[:9])
+        if '.' in str(timestamp):
+            timestamp = int(str(timestamp)[:10])
+        else:
+            timestamp = int(str(timestamp)[:9])
     return datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp)
 
 

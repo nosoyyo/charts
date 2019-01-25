@@ -2,6 +2,7 @@ import json
 import requests
 
 from settings import BACKEND_PORT
+from statemgmt import StateManager
 from utils.tiempo import buildClass, delta, ft
 
 
@@ -36,6 +37,8 @@ class PropsFactory():
         self.props['delta'] = delta
         self.props['ft'] = ft
         self.props['buildClass'] = buildClass
+        self.props['statemgr'] = StateManager
+
         if self.chart.startswith('nem_'):
             self.props['chart_title'] = self.nem_charts[self.chart]
         elif self.chart.startswith('qq_'):

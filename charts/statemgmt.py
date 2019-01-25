@@ -1,6 +1,7 @@
 import sys
 import redis
 import logging
+from fuzzywuzzy import process
 
 
 logger = logging.getLogger(__name__)
@@ -56,3 +57,19 @@ class StateManager():
             logger.error(f'{which} album {key} error when write into redis')
             raise Exception('coverStored state not successfully \
 stored in redis! Check StoreManager')
+
+    @classmethod
+    def isKehu(self, q):
+        '''
+        Temporary approach!!! Don't take this seriously.
+        '''
+        if not q:
+            result = None
+        kehu = self.r.lrange('kehu', 0, -1)
+        recall = process.extractOne(q, kehu)
+        if recall[1] >= 90:
+            result = recall
+        else:
+            result = None
+
+        return result

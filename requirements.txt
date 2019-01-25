@@ -5,3 +5,4 @@ aiofiles
 jinja2
 schedule
 cos-python-sdk-v5
+fuzzywuzzy
