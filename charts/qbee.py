@@ -57,6 +57,7 @@ class QQRoutine(Charter):
         pos = 0
         for item in j:
             pos += 1
+            logger.info(f'pos: {pos}\n')
 
             album_id = item['data']['albumid']
             album_mid = item['data']['albummid']

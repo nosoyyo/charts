@@ -27,7 +27,7 @@ class NemRoutine(Charter):
     nem_bucket_list = CoverToolkits.listBucket('nem')
 
     def getChart(self, key) -> list:
-        logger.debug('entering getChart...')
+        logger.debug(f'getChart getting {key}...')
         time.sleep(1)
         chart = self.n.top_songlist(_id=self.charts[key])
         return self.regularize(chart)
