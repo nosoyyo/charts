@@ -12,7 +12,7 @@
             
             <div class="card-body">    
                     <span class="badge badge-pill badge-danger">#{{ item.song_pos }}</span>
-                    <span class="badge badge-pill badge-warning">{{ props.delta(item.release_date).days }} 天前 ({{ props.ft(item.release_date) }})</span>
+                    <button id='release-count' type='button' class="badge badge-pill badge-warning" data-container="body" data-toggle="tooltip" data-placement="top" title='{{ props.ft(item.release_date) }}'>{{ props.delta(item.release_date).days }} 天前</button>
                 <h5 class="card-title"><a href="{{ item.song_url }}" title={{ item.song_title }}>{{ item.song_title }}</h5></a>
                 <h6 class="card-subtitle"><a href="{{ item.artists[0].url }}" title={{ item.artists[0].name }}>{{ item.artists[0].name }}</a></p>
                 <p class="card-text"> © {{ item.company[0] or 'N/A' }} </p>
@@ -23,5 +23,13 @@
     </ul>
 
 </div>
+
+<script>
+
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+
+</script>
 
 {% endblock %}
