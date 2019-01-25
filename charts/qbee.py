@@ -7,9 +7,14 @@ import schedule
 from urllib.parse import quote
 
 from charter import Charter
+from utils.cover import CoverToolkits
 
 
 logger = logging.getLogger(__name__)
+stream_handler = logging.StreamHandler(sys.stdout)
+stream_handler.setLevel(level=logging.DEBUG)
+logger.addHandler(stream_handler)
+logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 
 class QQRoutine(Charter):
@@ -20,6 +25,7 @@ class QQRoutine(Charter):
         'qq_new': 27,                 # 新歌
         'qq_original': 52,            # 原创
         }
+    qq_bucket_list = CoverToolkits.listBucket('qq')
 
     def getChart(self, key) -> list:
         '''
@@ -51,14 +57,25 @@ class QQRoutine(Charter):
         for item in j:
             pos += 1
 
+            album_id = item['data']['albumid']
             album_mid = item['data']['albummid']
             song_id = item['data']['songid']
             song_mid = item['data']['songmid']
-
             song_detail = self.getSongDetail(song_id)['songinfo']['data']['info']
+            item['album_id'] = album_id
+            item['song_id'] = song_id
 
+            # store cover in COS
             item['album_url'] = f'https://y.qq.com/n/yqq/album/{album_mid}.html'
-            item['album_cover'] = f'https://y.gtimg.cn/music/photo_new/T002R300x300M000{album_mid}.jpg'
+            item['album_cover_source'] = f'https://y.gtimg.cn/music/photo_new/T002R300x300M000{album_mid}.jpg'
+            # storeInCOS will do judge, so just call storeInCOS here
+            key = CoverToolkits.storeInCOS(
+                qq_id=album_id,
+                qq_url=item['album_cover_source'],
+                )
+            item['album_cover'] = key
+            item['album_cover'] = key
+
             release_date = song_detail['pub_time']['content'][0]['value']
             release_date = time.mktime(time.strptime(release_date, '%Y-%m-%d'))
             item['release_date'] = release_date
@@ -91,10 +108,10 @@ class QQRoutine(Charter):
         '''
         time.sleep(0.05)
         data = {"songinfo": {
-                "method": "get_song_detail_yqq",
-                "param": {"song_id": song_id},
-                "module": "music.pf_song_detail_svr",
-                    }
+                             "method": "get_song_detail_yqq",
+                             "param": {"song_id": song_id},
+                             "module": "music.pf_song_detail_svr",
+                             }
                 }
         d = data.__str__().replace("'", '"')
         url = f'https://u.y.qq.com/cgi-bin/musicu.fcg?data={quote(d)}'
@@ -104,7 +121,6 @@ class QQRoutine(Charter):
 
 if __name__ == "__main__":
     QQRoutine()
-    schedule.every(3).hours.do(QQRoutine)
     schedule.every().day.at("00:02").do(QQRoutine)
     logger.info(schedule.jobs)
     logger.info('schedule 安排上了')

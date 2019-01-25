@@ -39,7 +39,7 @@ class NetEase:
 
     def httpRequest(self, method, action, query=None, urlencoded=None, callback=None, timeout=None):    
         if(method == 'GET'):
-            url = action if (query == None) else (action + '?' + query)
+            url = action if (query is None) else (action + '?' + query)
             connection = requests.get(url, headers=self.header, timeout=default_timeout)
 
         elif(method == 'POST'):
@@ -64,7 +64,7 @@ class NetEase:
         }
         try:
             return self.httpRequest('POST', action, data)
-        except:
+        except Exception:
             return {'code': 501}
 
     # 用户歌单
@@ -73,7 +73,7 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['playlist']
-        except:
+        except Exception:
             return []
 
     # 搜索单曲(1)，歌手(100)，专辑(10)，歌单(1000)，用户(1002) *(type)*
@@ -94,7 +94,7 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['albums']
-        except:
+        except Exception:
             return []
 
     # 歌单（网友精选碟） hot||new http://music.163.com/#/discover/playlist/
@@ -103,7 +103,7 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['playlists']
-        except:
+        except Exception:
             return []
 
     # 歌单详情
@@ -112,7 +112,7 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['result']['tracks']
-        except:
+        except Exception:
             return []
 
     # 热门歌手 http://music.163.com/#/discover/artist/
@@ -121,7 +121,7 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['artists']
-        except:
+        except Exception:
             return []
 
     # 热门单曲 http://music.163.com/#/discover/toplist 50
@@ -136,7 +136,7 @@ class NetEase:
             # 去重
             songids = uniq(songids)
             return self.songs_detail(songids)
-        except:
+        except Exception:
             return []
 
     # 歌手单曲
@@ -145,7 +145,7 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['hotSongs']
-        except:
+        except Exception:
             return []
 
     # album id --> song id set
@@ -154,7 +154,7 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['album']['songs']
-        except:
+        except Exception:
             return []
 
     # song ids --> song urls ( details )
@@ -166,7 +166,7 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['songs']
-        except:
+        except Exception:
             return []
 
     # song id --> song url ( details )
@@ -175,9 +175,8 @@ class NetEase:
         try:
             data = self.httpRequest('GET', action)
             return data['songs']
-        except:
+        except Exception:
             return []
-
 
     # 今日最热（0）, 本周最热（10），历史最热（20），最新节目（30）
     def djchannels(self, stype=0, offset=0, limit=50):
@@ -188,7 +187,7 @@ class NetEase:
             channelids = re.findall(r'/dj\?id=(\d+)', connection.text)
             channelids = uniq(channelids)
             return self.channel_detail(channelids)
-        except:
+        except Exception:
             return []
 
     # DJchannel ( id, channel_name ) ids --> song urls ( details )
@@ -201,7 +200,7 @@ class NetEase:
                 data = self.httpRequest('GET', action)
                 channel = self.dig_info( data['program']['mainSong'], 'channels' )
                 channels.append(channel)
-            except:
+            except Exception:
                 continue
 
         return channels

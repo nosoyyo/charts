@@ -5,6 +5,7 @@ from utils.pipeline import MongoDBPipeline
 
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 
 class Charter():
