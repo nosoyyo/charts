@@ -37,7 +37,7 @@ def buildClass(d):
     elif 7 <= d.days < 14:
         _class = 'two_weeks'
     elif 14 <= d.days < 28:
-        _class = 'two_weeks'
+        _class = 'one_month'
     elif 28 <= d.days < 90:
         _class = 'three_months'
     elif 90 <= d.days < 365:

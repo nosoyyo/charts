@@ -3,26 +3,19 @@
     <ul class="row">
         {% for item in props.songlist %}
         <div class="card col-3 song-card {{ props.buildClass(props.delta(item.release_date)) }}" style="width: 18rem;">
-            
+                
             <a href="{{ item.album_url }}">
                 <img onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                    class="card-img-top" src="{{ item.album_cover }}" alt="{{ item.album_title }} ">
+                class="card-img-top" src="{{ item.album_cover }}" alt="{{ item.album_title }} ">
             </a>
-            <div class="card-body">
 
-                <span class="badge badge-pill badge-primary">{{ item.song_pos }}</span>
-                <span class="badge badge-pill badge-light">{{ props.delta(item.release_date).days }} 天前</span>
-
+            
+            <div class="card-body">    
+                    <span class="badge badge-pill badge-danger">#{{ item.song_pos }}</span>
+                    <span class="badge badge-pill badge-warning">{{ props.delta(item.release_date).days }} 天前 ({{ props.ft(item.release_date) }})</span>
                 <h5 class="card-title"><a href="{{ item.song_url }}" title={{ item.song_title }}>{{ item.song_title }}</h5></a>
-                <p class="card-text"><a href="{{ item.artists[0].url }}" title={{ item.artists[0].name }}>{{ item.artists[0].name }}</a></p>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <p class="card-text"> © {{ item.company[0] or 'N/A' }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <p class="card-text"> {{ props.ft(item.release_date) }}</p>
-                    </li>
-                </ul>
+                <h6 class="card-subtitle"><a href="{{ item.artists[0].url }}" title={{ item.artists[0].name }}>{{ item.artists[0].name }}</a></p>
+                <p class="card-text"> © {{ item.company[0] or 'N/A' }} </p>
             </div>
         </div>
 
