@@ -7,6 +7,7 @@ import schedule
 from urllib.parse import quote
 
 from charter import Charter
+
 from utils.cover import CoverToolkits
 
 

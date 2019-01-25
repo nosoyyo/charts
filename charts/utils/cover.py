@@ -78,14 +78,14 @@ class CoverToolkits():
             raise Exception('must contain some id!')
         logger.debug(f'key: {key}\nurl: {url}\nbucket: {bucket}')
 
-        state = StateManager.isCoverStored(which, key)
+        state = StateManager.isCoverExisted(which, key)
         if state:
             if which == 'nem':
                 result = self.genCoverURLById(nem_id=key)
-            if which == 'qq':
+            elif which == 'qq':
                 result = self.genCoverURLById(qq_id=key)
             else:
-                raise Exception('wrong chard. only support `nem` or `qq`!')
+                raise Exception('only support `nem` or `qq`!')
             logger.info(f'already exist: {result}')
         else:
             stream = requests.get(url)
@@ -96,6 +96,7 @@ class CoverToolkits():
                                         )
             logger.debug(resp)
             result = f'https://{bucket}.cos.ap-guangzhou.myqcloud.com/{key}.jpg'
+            StateManager.coverStored(which, key, result)
             logger.info(f'uploaded: {result}')
         return result
 
