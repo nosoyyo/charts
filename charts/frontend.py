@@ -5,7 +5,7 @@ from starlette.applications import Starlette
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 
-from utils.tiempo import eightDigits, ft
+from utils.tiempo import eightDigits
 from propsfactory import PropsFactory
 from settings import FRONTEND_PORT
 

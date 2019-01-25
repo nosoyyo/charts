@@ -1,8 +1,14 @@
+import sys
 import time
+import logging
 import schedule
 
 from nemapi import NetEase
 from charter import Charter
+
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 
 class NemRoutine(Charter):
@@ -62,8 +68,8 @@ if __name__ == "__main__":
     NemRoutine()
     schedule.every(3).hours.do(NemRoutine)
     schedule.every().day.at("00:01").do(NemRoutine)
-    print(schedule.jobs)
-    print('schedule 安排上了')
+    logger.info(schedule.jobs)
+    logger.info('schedule 安排上了')
     while True:
         schedule.run_pending()
         time.sleep(1)

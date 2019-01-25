@@ -1,5 +1,10 @@
+import sys
+import logging
 from utils.tiempo import eightDigits
 from utils.pipeline import MongoDBPipeline
+
+
+logger = logging.getLogger(__name__)
 
 
 class Charter():
@@ -13,7 +18,7 @@ class Charter():
     def __init__(self):
 
         self.today = eightDigits()
-        print(self.today)
+        logger.debug(self.today)
         keys = [key for key in self.charts.keys()]
         self.keys = keys
 
@@ -21,7 +26,7 @@ class Charter():
             # get the stuff
             for key in keys:
                 self.__dict__[key] = self.getChart(key)
-                print(f'self.{key} grabbed')
+                logger.info(f'self.{key} grabbed')
 
                 # generate hashes of all song titles of this chart
                 _hashable: list = self.getSongTitleList(key)
@@ -38,10 +43,10 @@ class Charter():
 
                 if _db_hash == self.__dict__[f'{key}_hash']:
                     exist_flags.append(True)
-                    print(f'{self.today}.{key} seems already exist.')
+                    logger.info(f'{self.today}.{key} seems already exist.')
                 else:
                     exist_flags.append(False)
-                    print(f'{self.today}.{key} not there, will insert.')
+                    logger.info(f'{self.today}.{key} not there, will insert.')
 
             # insert into db if nothing exists
             _index = 0
@@ -49,12 +54,13 @@ class Charter():
                 if not flag:
                     self.m.db[f'{self.today}.{keys[_index]}'].drop()
                     self.m.db[f'{self.today}.{keys[_index]}'].insert_many(
-                                                    self.__dict__[keys[_index]])
-                    print(f'{self.today}.{keys[_index]} inserted in MongoDB.')
+                                                 self.__dict__[keys[_index]])
+                    logger.info(
+                        f'{self.today}.{keys[_index]} inserted in MongoDB.')
                 _index += 1
 
         except Exception as e:
-            print(e)
+            logger.error(e)
 
     def getChart(self, key) -> list:
         raise NotImplementedError
@@ -64,7 +70,7 @@ class Charter():
 
     def checkTypes(self):
         for key in self.keys:
-            print(type(self.__dict__[key]))
+            logger.debug(type(self.__dict__[key]))
 
     def buildHashedList(self, query: list):
         '''

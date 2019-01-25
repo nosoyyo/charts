@@ -1,10 +1,15 @@
+import sys
 import json
 import time
+import logging
 import requests
 import schedule
 from urllib.parse import quote
 
 from charter import Charter
+
+
+logger = logging.getLogger(__name__)
 
 
 class QQRoutine(Charter):
@@ -101,8 +106,8 @@ if __name__ == "__main__":
     QQRoutine()
     schedule.every(3).hours.do(QQRoutine)
     schedule.every().day.at("00:02").do(QQRoutine)
-    print(schedule.jobs)
-    print('schedule 安排上了')
+    logger.info(schedule.jobs)
+    logger.info('schedule 安排上了')
     while True:
         schedule.run_pending()
         time.sleep(1)
