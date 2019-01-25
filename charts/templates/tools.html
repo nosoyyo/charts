@@ -8,46 +8,65 @@
     }
 
     .tools {
-        margin: 30px;
+        margin: 0px 15px 0px 75px;
     }
 
 </style>
 
-<div class="container">
+<div class='tools'>
+    
+        <span class='badge badge-dark'>按日期显示</span>
 
-        <div class="dropdown tools">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                显示选项
-            </button>
-            <div id='release-filter' class="dropdown-menu btn-group-toggle" aria-labelledby="dropdownMenuButton">
-                <label class="btn btn-secondary active">
-                    <input type="checkbox" checked autocomplete="off"> Checked
-                </label>
-                <a id='one_week' class="dropdown-item" href="#">一周内</a>
-                <a id='two_weeks' class="dropdown-item" href="#">两周内</a>
-                <a id='one_month' class="dropdown-item" href="#">一月内</a>
-                <a id='three_months' class="dropdown-item" href="#">三月内</a>
-                <a id='one_year' class="dropdown-item" href="#">一年内</a>
-                <a id='two_years' class="dropdown-item" href="#">两年内</a>
-            </div>
+        <div class="btn-group-toggle" role="group" data-toggle='buttons'>
+            <label id='one_week' class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off">本周
+            </label>
+            <label id='two_weeks'  class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off">两周前
+            </label>
+            <label id='one_month' class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off">一月前
+            </label>
+            <label id='three_months' class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off">三月前
+            </label>
+            <label id='one_year' class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off">一年前
+            </label>
+            <label id='two_years' class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off">两年前
+            </label>
+            <label id='back_catalogue' class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off">更久
+            </label>
+            
         </div>
+    </div>
 
         <script>
 
-            $('#two_weeks').click(function(){
-                $('.two_weeks').css('display','none');
+            $('#one_week').click(function(){
+                $('.one_week').toggle('fast');
             });
-
+            $('#two_weeks').click(function(){
+                $('.two_weeks').toggle('fast');
+            });
+            $('#one_month').click(function(){
+                $('.one_month').toggle('fast');
+            });
             $('#three_months').click(function(){
-                $('.three_months').css('display','none');
+                $('.three_months').toggle('fast');
+            });
+            $('#one_year').click(function(){
+                $('.one_year').toggle('fast');
+            });
+            $('#two_years').click(function(){
+                $('.two_years').toggle('fast');
+            });
+            $('#back_catalogue').click(function(){
+                $('.back_catalogue').toggle('fast');
             });
 
         </script>    
 
-
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-</div>
 {% endblock %}

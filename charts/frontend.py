@@ -28,6 +28,7 @@ async def charts(request):
 
     # some backend rendering
     props = PropsFactory(chart, day).props
+    props['day'] = day
 
     template = app.get_template('index.html')
     content = template.render(request=request,
