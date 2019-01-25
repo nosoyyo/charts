@@ -14,6 +14,13 @@ class PropsFactory():
         'nem_hot': '云音乐热歌榜',
     }
 
+    qq_charts = {
+        'qq_new': 'QQ音乐巅峰榜·新歌',
+        'qq_hot': 'QQ音乐巅峰榜·热歌',
+        'qq_trends': 'QQ音乐巅峰榜·流行指数',
+        'qq_original': 'QQ音乐巅峰榜·腾讯音乐人原创榜',
+    }
+
     def __init__(self, chart: str, day: str):
         self.chart, self.day = chart, day
         url = f'http://127.0.0.1:{BACKEND_PORT}/toplist?chart={chart}&day={day}'
@@ -30,5 +37,6 @@ class PropsFactory():
         self.props['ft'] = ft
         self.props['buildClass'] = buildClass
         if self.chart.startswith('nem_'):
-            # TODO
             self.props['chart_title'] = self.nem_charts[self.chart]
+        elif self.chart.startswith('qq_'):
+            self.props['chart_title'] = self.qq_charts[self.chart]

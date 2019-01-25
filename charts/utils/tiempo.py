@@ -12,7 +12,7 @@ def ft(timestamp):
     which looks like `1543766400000`
     '''
 
-    timestamp = int(str(timestamp)[:-3])
+    timestamp = int(str(timestamp)[:10])
     t = datetime.datetime.fromtimestamp(timestamp)
     return f'{t.year}{t.month:0>2}{t.day:0>2}'
 

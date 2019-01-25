@@ -30,11 +30,7 @@ async def toplist(request):
     for item in result:
         item.pop('_id')
 
-    doc = {}
-    for i in range(len(result)):
-        doc[i+1] = result[i]
-
-    return JSONResponse(doc)
+    return JSONResponse(result)
 
 
 if __name__ == '__main__':

@@ -54,8 +54,9 @@ class QQRoutine(Charter):
 
             item['album_url'] = f'https://y.qq.com/n/yqq/album/{album_mid}.html'
             item['album_cover'] = f'https://y.gtimg.cn/music/photo_new/T002R300x300M000{album_mid}.jpg'
-            # TODO define this date format
-            item['release_date'] = song_detail['pub_time']['content'][0]['value']
+            release_date = song_detail['pub_time']['content'][0]['value']
+            release_date = time.mktime(time.strptime(release_date, '%Y-%m-%d'))
+            item['release_date'] = release_date
             item['album_title'] = item['data']['albumname']
             item['song_pos'] = pos
             item['song_url'] = f'https://y.qq.com/n/yqq/song/{song_mid}.html'
@@ -70,7 +71,6 @@ class QQRoutine(Charter):
                 item['company'].append(c['value'])
 
         return j
-
 
     def getSongTitleList(self, key):
         return [i['data']['songname'] for i in self.__dict__[key]]
